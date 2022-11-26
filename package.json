@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "start": "",
-        "test": "jest --watchAll",
+        "test": "jest --watchAll --coverage",
         "lint": "eslint .",
         "prepare": "husky install"
     },
