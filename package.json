@@ -6,6 +6,7 @@
     "type": "module",
     "scripts": {
         "start": "tsc --watch",
+        "build": "tsc",
         "test": "jest --watchAll --coverage",
         "test:prod": "jest --watchAll --coverage --watchAll=false",
         "lint": "eslint .",
