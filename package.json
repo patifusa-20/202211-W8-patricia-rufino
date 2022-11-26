@@ -7,7 +7,8 @@
     "scripts": {
         "start": "",
         "test": "jest --watchAll",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "prepare": "husky install"
     },
     "keywords": [],
     "author": "Patricia Rufino",
@@ -24,6 +25,7 @@
         "babel-jest": "^29.3.1",
         "eslint": "^8.28.0",
         "eslint-config-prettier": "^8.5.0",
+        "husky": "^8.0.2",
         "jest": "^29.3.1"
     },
     "babel": {
