@@ -1,20 +1,20 @@
 export type DataSerieType = {
-    id: string;
+    id: number;
     name: string;
     creator: string;
     year: number;
     poster: string;
-    isWatched: boolean;
+    watched: boolean;
     score: number;
     emmies: number;
 };
 
 export class Serie implements DataSerieType {
     static generateId() {
-        return String(~~Math.random() * 1_000_000);
+        return ~~Math.random() * 1_000_000;
     }
-    id: string;
-    isWatched: boolean;
+    id: number;
+    watched: boolean;
     constructor(
         public name: string,
         public creator: string,
@@ -24,6 +24,6 @@ export class Serie implements DataSerieType {
         public emmies: number
     ) {
         this.id = Serie.generateId();
-        this.isWatched = false;
+        this.watched = false;
     }
 }
