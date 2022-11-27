@@ -1,4 +1,4 @@
-const series = [
+export const series = [
     {
         id: 1,
         name: 'The Sopranos',
@@ -50,3 +50,5 @@ const series = [
         emmies: 0,
     },
 ];
+
+export const initSeries = () => series;
