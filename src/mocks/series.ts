@@ -1,4 +1,6 @@
-export const series = [
+import { DataSerieType } from '../models/serie.js';
+
+export const series: Array<DataSerieType> = [
     {
         id: 1,
         name: 'The Sopranos',
@@ -51,4 +53,5 @@ export const series = [
     },
 ];
 
-export const initSeries = () => series;
+// Lo comentamos de momento porque no me coge lo que devuelve la función como array
+// export const initSeries = (): Array<DataSerieType> => series;
