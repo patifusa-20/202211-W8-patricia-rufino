@@ -7,6 +7,7 @@ export class ItemWatched extends Component {
         this.template = this.createTemplate();
         this.render(selector);
     }
+
     createTemplate() {
         // Filtrar array por series NO vistas
         const seriesWatched = series.filter(

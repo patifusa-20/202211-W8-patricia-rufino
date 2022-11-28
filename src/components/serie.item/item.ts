@@ -1,12 +1,23 @@
 import { Component } from '../component/component.js';
 import { series } from '../../mocks/series.js';
+import { Serie } from '../../models/serie.js';
 
 export class Item extends Component {
     constructor(selector: string) {
         super();
         this.template = this.createTemplate();
         this.render(selector);
+        document
+            .querySelector('.score')
+            ?.addEventListener('click', this.handleRate);
     }
+
+    handleRate = (event: Event) => {
+        event.preventDefault();
+        const rateElement = event.target as HTMLUListElement;
+        rateElement.outerHTML =
+            '<i class="icon--score fas fa-star" title="1/5"></i>';
+    };
     createTemplate() {
         // Filtrar array por series NO vistas
         const seriesNoWatched = series.filter(
