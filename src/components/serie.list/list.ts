@@ -28,7 +28,13 @@ export class List extends Component {
         this.template = this.createTemplate(seriesList);
         this.addRender(selector);
         setTimeout(() => {
-            new Item(`${selector} .series-list`, seriesList);
+            try {
+                new Item(`${selector} .series-list`, seriesList);
+            } catch (error) {
+                let message = 'Unknown Error';
+                if (error instanceof Error) message = error.message;
+                else message = String(error);
+            }
         }, 100);
     }
     createTemplate(seriesList: Array<DataSerieType>) {
