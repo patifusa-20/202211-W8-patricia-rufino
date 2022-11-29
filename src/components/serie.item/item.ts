@@ -1,30 +1,30 @@
 import { Component } from '../component/component.js';
-import { series } from '../../mocks/series.js';
-import { Serie } from '../../models/serie.js';
+import { DataSerieType } from '../../models/serie.js';
 
 export class Item extends Component {
-    constructor(selector: string) {
+    constructor(selector: string, seriesList: Array<DataSerieType>) {
         super();
-        this.template = this.createTemplate();
-        this.render(selector);
-        document
-            .querySelector('.score')
-            ?.addEventListener('click', this.handleRate);
+        this.template = this.createTemplate(seriesList);
+        this.addRender(selector);
+        this.listenerRate();
     }
 
     handleRate = (event: Event) => {
-        event.preventDefault();
+        // event.preventDefault();
         const rateElement = event.target as HTMLUListElement;
-        rateElement.outerHTML =
-            '<i class="icon--score fas fa-star" title="1/5"></i>';
+        return console.log(rateElement);
     };
-    createTemplate() {
-        // Filtrar array por series NO vistas
-        const seriesNoWatched = series.filter(
-            (element) => element.watched === false
-        );
+
+    listenerRate() {
+        const scoreList = document.querySelectorAll('.score');
+        scoreList.forEach((item) => {
+            item.addEventListener('click', this.handleRate);
+        });
+    }
+
+    createTemplate(seriesList: Array<DataSerieType>) {
         let itemsTemplate = '';
-        seriesNoWatched.forEach((element) => {
+        seriesList.forEach((element) => {
             itemsTemplate += `
                 <li class="serie">
                     <img
