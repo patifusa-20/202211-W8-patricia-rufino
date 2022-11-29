@@ -1,49 +1,50 @@
 import { Component } from '../component/component.js';
-import { series } from '../../mocks/series.js';
+import { DataSerieType, Serie } from '../../models/serie.js';
+import { Item } from '../serie.item/item.js';
 
 // Cambiar mensaje
-const messageNoWatchedSeries = () => {
-    const seriesNoWatched = series.filter(
-        (element) => element.watched === false
-    );
-    if (!seriesNoWatched) {
-        return `<p class="info">Congrats! You've watched all your series</p>`;
+const messageNoWatchedSeries = (seriesList: Array<DataSerieType>) => {
+    let itemsTemplate = `<section class="series-pending">
+                <h3 class="subsection-title">Pending series</h3>`;
+    if (seriesList.length === 0) {
+        return (itemsTemplate += `<p class="info">Congrats! You've watched all your series</p>`);
     } else {
-        return `<p class="info">You have ${seriesNoWatched.length} series pending to watch</p>`;
+        return (itemsTemplate += `<p class="info">You have ${seriesList.length} series pending to watch</p>`);
     }
 };
-const messageWatchedSeries = () => {
-    const seriesWatched = series.filter((element) => element.watched === true);
-    if (!seriesWatched) {
-        return `<p class="info">You already have not watched any serie</p>`;
+const messageWatchedSeries = (seriesList: Array<DataSerieType>) => {
+    let itemsTemplate = `<section class="series-watched">
+    <h3 class="subsection-title">Watched series</h3>`;
+    if (seriesList.length === 0) {
+        return (itemsTemplate += `<p class="info">You already have not watched any serie</p>`);
     } else {
-        return `<p class="info">You have watched  ${seriesWatched.length} series</p>`;
+        return (itemsTemplate += `<p class="info">You have watched  ${seriesList.length} series</p>`);
     }
 };
 
 export class List extends Component {
-    constructor(selector: string) {
+    constructor(selector: string, seriesList: Array<DataSerieType>) {
         super();
-        this.template = this.createTemplate();
+        this.template = this.createTemplate(seriesList);
         this.addRender(selector);
+        setTimeout(() => {
+            new Item(`${selector} .series-list`, seriesList);
+        }, 100);
     }
-    createTemplate() {
-        return `
-            <main class="main">
-                <section class="series">
-                    <h2 class="section-title">Series list</h2>
-                    <section class="series-pending">
-                        <h3 class="subsection-title">Pending series</h3>
-                        ${messageNoWatchedSeries()}
-                        <ul class="series-list"></ul>
-                    </section>
-                    <section class="series-watched">
-                        <h3 class="subsection-title">Watched series</h3>
-                        ${messageWatchedSeries()}                        
-                        <ul class="series-list series-list--watched"></ul>
-                    </section>
-                </section>
-            </main>
+    createTemplate(seriesList: Array<DataSerieType>) {
+        let itemsTemplate = '';
+        const isListWatched = (element: Serie) => element.watched === false;
+        const isWatched = seriesList.every(isListWatched);
+        itemsTemplate += `            
+                    ${
+                        isWatched
+                            ? messageNoWatchedSeries(seriesList)
+                            : messageWatchedSeries(seriesList)
+                    }
+                <ul class="series-list">
+                </ul>
+            </section>
         `;
+        return itemsTemplate;
     }
 }

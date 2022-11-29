@@ -43,5 +43,7 @@ export const series: Array<DataSerieType> = [
     ),
 ];
 
+series[3].watched = true;
+
 // Lo comentamos de momento porque no me coge lo que devuelve la función como array
 // export const initSeries = (): Array<DataSerieType> => series;
