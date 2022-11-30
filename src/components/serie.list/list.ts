@@ -31,9 +31,7 @@ export class List extends Component {
             try {
                 new Item(`${selector} .series-list`, seriesList);
             } catch (error) {
-                let message = 'Unknown Error';
-                if (error instanceof Error) message = error.message;
-                else message = String(error);
+                console.log((error as Error).message);
             }
         }, 100);
     }
