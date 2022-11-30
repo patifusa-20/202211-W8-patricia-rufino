@@ -10,7 +10,6 @@ export class Item extends Component {
     }
 
     handleRate = (event: Event) => {
-        // event.preventDefault();
         const rateElement = event.target as HTMLUListElement;
         return console.log(rateElement);
     };
