@@ -1,30 +1,33 @@
 import { Component } from '../component/component.js';
-import { DataSerieType } from '../../models/serie.js';
+import { DataSerieType, Serie } from '../../models/serie.js';
+import { series } from '../../mocks/series.js';
+
+const handleRate = (event: Event) => {
+    const rateElement = event.target as HTMLUListElement;
+    return console.log(rateElement);
+};
 
 export class Item extends Component {
-    constructor(selector: string, seriesList: Array<DataSerieType>) {
+    constructor(selector: string, element: Serie) {
         super();
-        this.template = this.createTemplate(seriesList);
+        this.template = this.createTemplate(element);
         this.addRender(selector);
         this.listenerRate();
     }
 
-    handleRate = (event: Event) => {
-        const rateElement = event.target as HTMLUListElement;
-        return console.log(rateElement);
-    };
-
     listenerRate() {
-        const scoreList = document.querySelectorAll('.score');
-        scoreList.forEach((item) => {
-            item.addEventListener('click', this.handleRate);
-        });
+        // Versión con todos
+        // const scoreList = document.querySelectorAll('.score');
+        // scoreList.forEach((item) => {
+        //     item.addEventListener('click', handleRate);
+        // });
+        const scoreItem = document.querySelector('.score');
     }
 
-    createTemplate(seriesList: Array<DataSerieType>) {
+    createTemplate(element: Serie) {
         let itemsTemplate = '';
-        seriesList.forEach((element) => {
-            itemsTemplate += `
+        // seriesList.forEach((element) => {
+        itemsTemplate += `
                 <li class="serie">
                     <img
                         class="serie__poster"
@@ -53,7 +56,7 @@ export class Item extends Component {
                     <i class="fas fa-times-circle icon--delete"></i>
                 </li>
             `;
-        });
+        // });
         return itemsTemplate;
     }
 }

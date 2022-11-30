@@ -27,13 +27,17 @@ export class List extends Component {
         super();
         this.template = this.createTemplate(seriesList);
         this.addRender(selector);
-        setTimeout(() => {
+        this.createItems(selector, seriesList);
+    }
+
+    createItems(selector: string, seriesList: Array<DataSerieType>) {
+        seriesList.forEach((element: Serie) => {
             try {
-                new Item(`${selector} .series-list`, seriesList);
+                new Item(`${selector} .series-list`, element);
             } catch (error) {
                 console.log((error as Error).message);
             }
-        }, 100);
+        });
     }
     createTemplate(seriesList: Array<DataSerieType>) {
         let itemsTemplate = '';
@@ -44,9 +48,10 @@ export class List extends Component {
                         isWatched
                             ? messageNoWatchedSeries(seriesList)
                             : messageWatchedSeries(seriesList)
-                    }
-                <ul class="series-list">
-                </ul>
+                    }`;
+
+        itemsTemplate += `                    
+                <ul class="series-list"></ul>
             </section>
         `;
         return itemsTemplate;
