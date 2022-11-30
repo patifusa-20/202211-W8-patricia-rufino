@@ -7,10 +7,15 @@ const seriesNoWatched = series.filter((element) => element.watched === false);
 const seriesWatched = series.filter((element) => element.watched === true);
 export class App {
     constructor() {
-        new Header('.root');
-        new Main('.root');
-
-        new List('[name="list"]', seriesNoWatched);
-        new List('[name="list-watched"]', seriesWatched);
+        try {
+            new Header('.root');
+            new Main('.root');
+            new List('[name="list"]', seriesNoWatched);
+            new List('[name="list-watched"]', seriesWatched);
+        } catch (error) {
+            let message = 'Unknown Error';
+            if (error instanceof Error) message = error.message;
+            else message = String(error);
+        }
     }
 }
