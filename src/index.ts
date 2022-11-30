@@ -2,6 +2,10 @@ import { App } from './components/app/app.js';
 
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
-        new App();
+        try {
+            new App();
+        } catch (error) {
+            console.log((error as Error).message);
+        }
     });
 })();
