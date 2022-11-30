@@ -5,7 +5,11 @@ import { Header } from './header';
 
 describe('Given "Header" component', () => {
     document.body.innerHTML = `<slot></slot>`;
-    new Header('slot');
+    try {
+        new Header('slot');
+    } catch (error) {
+        console.log((error as Error).message);
+    }
     const elements = [
         screen.getByRole('banner'), // <header />
         screen.getByRole('heading', { name: 'My Series' }), // <h1>

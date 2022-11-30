@@ -4,22 +4,22 @@ import { Item } from '../serie.item/item.js';
 
 // Cambiar mensaje
 const messageNoWatchedSeries = (seriesList: Array<DataSerieType>) => {
-    let itemsTemplate = `<section class="series-pending">
-                <h3 class="subsection-title">Pending series</h3>`;
+    let itemsTemplate = `<section class="series-pending"><h3 class="subsection-title">Pending series</h3>`;
     if (seriesList.length === 0) {
-        return (itemsTemplate += `<p class="info">Congrats! You've watched all your series</p>`);
+        itemsTemplate += `<p class="info">Congrats! You've watched all your series</p>`;
     } else {
-        return (itemsTemplate += `<p class="info">You have ${seriesList.length} series pending to watch</p>`);
+        itemsTemplate += `<p class="info">You have ${seriesList.length} series pending to watch</p>`;
     }
+    return itemsTemplate;
 };
 const messageWatchedSeries = (seriesList: Array<DataSerieType>) => {
-    let itemsTemplate = `<section class="series-watched">
-    <h3 class="subsection-title">Watched series</h3>`;
+    let itemsTemplate = `<section class="series-watched"><h3 class="subsection-title">Watched series</h3>`;
     if (seriesList.length === 0) {
-        return (itemsTemplate += `<p class="info">You already have not watched any serie</p>`);
+        itemsTemplate += `<p class="info">You already have not watched any serie</p>`;
     } else {
-        return (itemsTemplate += `<p class="info">You have watched  ${seriesList.length} series</p>`);
+        itemsTemplate += `<p class="info">You have watched  ${seriesList.length} series</p>`;
     }
+    return itemsTemplate;
 };
 
 export class List extends Component {
