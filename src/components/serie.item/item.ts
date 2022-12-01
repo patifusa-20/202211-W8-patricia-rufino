@@ -1,59 +1,59 @@
 import { Component } from '../component/component.js';
-import { DataSerieType } from '../../models/serie.js';
+import { DataSerieType, Serie } from '../../models/serie.js';
+import { series } from '../../mocks/series.js';
+import { Score } from '../serie.score/score.js';
 
+const handleRate = (event: Event) => {
+    const rateElement = event.target as HTMLUListElement;
+    console.log(rateElement);
+};
 export class Item extends Component {
-    constructor(selector: string, seriesList: Array<DataSerieType>) {
+    isWatched: boolean;
+    constructor(private selector: string, private itemSerie: Serie) {
         super();
-        this.template = this.createTemplate(seriesList);
+        this.template = this.createTemplate();
         this.addRender(selector);
         this.listenerRate();
+        this.isWatched = this.changeValue(itemSerie);
+        this.createScore();
     }
 
-    handleRate = (event: Event) => {
-        const rateElement = event.target as HTMLUListElement;
-        return console.log(rateElement);
-    };
+    createScore() {
+        try {
+            new Score(`${this.selector} li .score`, this.itemSerie);
+        } catch (error) {
+            console.log((error as Error).message);
+        }
+    }
+
+    changeValue(itemSerie: Serie) {
+        console.log(itemSerie.name + ' ' + itemSerie.watched);
+        return true;
+    }
 
     listenerRate() {
-        const scoreList = document.querySelectorAll('.score');
+        const scoreList = document.querySelectorAll('.score') as NodeList;
         scoreList.forEach((item) => {
-            item.addEventListener('click', this.handleRate);
+            item.addEventListener('click', handleRate);
         });
     }
 
-    createTemplate(seriesList: Array<DataSerieType>) {
+    createTemplate() {
         let itemsTemplate = '';
-        seriesList.forEach((element) => {
-            itemsTemplate += `
+        itemsTemplate += `
                 <li class="serie">
                     <img
                         class="serie__poster"
-                        src="${element.poster}"
-                        alt="${element.name} poster"
+                        src="${this.itemSerie.poster}"
+                        alt="${this.itemSerie.name} poster"
                     />
-                    <h4 class="serie__title">${element.name}</h4>
-                    <p class="serie__info">${element.creator} (${element.year})</p>
+                    <h4 class="serie__title">${this.itemSerie.name}</h4>
+                    <p class="serie__info">${this.itemSerie.creator} (${this.itemSerie.year})</p>
                     <ul class="score">
-                        <li class="score__star">
-                            <i class="icon--score far fa-star" title="1/5"></i>
-                        </li>
-                        <li class="score__star">
-                            <i class="icon--score far fa-star" title="2/5"></i>
-                        </li>
-                        <li class="score__star">
-                            <i class="icon--score far fa-star" title="3/5"></i>
-                        </li>
-                        <li class="score__star">
-                            <i class="icon--score far fa-star" title="4/5"></i>
-                        </li>
-                        <li class="score__star">
-                            <i class="icon--score far fa-star" title="5/5"></i>
-                        </li>
                     </ul>
                     <i class="fas fa-times-circle icon--delete"></i>
                 </li>
             `;
-        });
         return itemsTemplate;
     }
 }

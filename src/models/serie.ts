@@ -7,8 +7,6 @@ export type DataSerieType = {
     watched: boolean;
     score: number;
     emmies: number;
-
-    isWatched: () => void;
 };
 
 export class Serie implements DataSerieType {
@@ -27,9 +25,5 @@ export class Serie implements DataSerieType {
     ) {
         this.id = Serie.generateId();
         this.watched = false;
-    }
-
-    isWatched() {
-        this.watched = true;
     }
 }

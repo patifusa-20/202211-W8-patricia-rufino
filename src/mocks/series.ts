@@ -1,6 +1,6 @@
-import { DataSerieType, Serie } from '../models/serie.js';
+import { Serie } from '../models/serie.js';
 
-export const series: Array<DataSerieType> = [
+export const series = [
     new Serie(
         'The Sopranos',
         'David Chase',
@@ -41,9 +41,10 @@ export const series: Array<DataSerieType> = [
         0,
         0
     ),
-];
+].map((item) => ({ ...item }));
 
-series[3].watched = true;
-
-// Lo comentamos de momento porque no me coge lo que devuelve la función como array
-// export const initSeries = (): Array<DataSerieType> => series;
+export const initSeries = () => {
+    series[3].watched = true;
+    series[1].watched = true;
+    return series;
+};
