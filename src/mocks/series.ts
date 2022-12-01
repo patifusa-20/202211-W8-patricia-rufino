@@ -6,7 +6,7 @@ export const series = [
         'David Chase',
         1999,
         'https://m.media-amazon.com/images/M/MV5BZGJjYzhjYTYtMDBjYy00OWU1LTg5OTYtNmYwOTZmZjE3ZDdhXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg',
-        5,
+        4,
         21
     ),
     new Serie(
@@ -22,7 +22,7 @@ export const series = [
         'Matthew Weiner',
         2007,
         'https://pics.filmaffinity.com/Mad_Men_Serie_de_TV-351490728-large.jpg',
-        5,
+        3,
         116
     ),
     new Serie(
@@ -44,7 +44,8 @@ export const series = [
 ].map((item) => ({ ...item }));
 
 export const initSeries = () => {
+    series[0].watched = true;
+    series[2].watched = true;
     series[3].watched = true;
-    series[1].watched = true;
     return series;
 };

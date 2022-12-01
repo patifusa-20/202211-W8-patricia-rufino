@@ -2,21 +2,39 @@ import { Serie } from '../../models/serie.js';
 import { Component } from '../component/component.js';
 
 export class Score extends Component {
-    constructor(selector: string, private itemSerie: Serie) {
+    constructor(selector: string, private itemSerie: Serie, itemScore: number) {
         super();
-        this.template = this.createTemplate();
+        this.template = this.createTemplate(itemScore);
         this.addRender(selector);
     }
-    createTemplate() {
-        return `
-        <li class="score__star">
-        ${
-            this.itemSerie.watched === false
-                ? `<i class="icon--score far fa-star" title="1/5"></i>`
-                : `<i class="icon--score fas fa-star" title="1/5"></i>`
+    createTemplate(itemScore: number) {
+        let itemsTemplate;
+        const itemsArrayTemplate: Array<string> = [];
+        for (let i = 0; i < 5; i++) {
+            itemsArrayTemplate.push(
+                `<i class="icon--score far fa-star" title="1/5"></i>`
+            );
         }
-            
-        </li>
-        `;
+
+        const itemsArrayTemplateRated: Array<string> = [];
+        for (let i = 0; i < itemScore; i++) {
+            itemsArrayTemplateRated.push(
+                `<i class="icon--score fas fa-star" title="1/5"></i>`
+            );
+        }
+        //const newItemsTemplateRated = itemsArrayTemplateRated.join();
+
+        if (itemScore !== 0) {
+            let index = 0;
+            for (const arr of itemsArrayTemplateRated) {
+                itemsArrayTemplate.splice(index, 1, arr);
+                index = index + 1;
+            }
+            itemsTemplate = itemsArrayTemplate.join('');
+        } else {
+            itemsTemplate = itemsArrayTemplate.join('');
+        }
+
+        return itemsTemplate;
     }
 }

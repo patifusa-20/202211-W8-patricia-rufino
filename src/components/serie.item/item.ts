@@ -1,6 +1,5 @@
 import { Component } from '../component/component.js';
-import { DataSerieType, Serie } from '../../models/serie.js';
-import { series } from '../../mocks/series.js';
+import { Serie } from '../../models/serie.js';
 import { Score } from '../serie.score/score.js';
 
 const handleRate = (event: Event) => {
@@ -13,14 +12,18 @@ export class Item extends Component {
         super();
         this.template = this.createTemplate();
         this.addRender(selector);
+        this.createScore();
         this.listenerRate();
         this.isWatched = this.changeValue(itemSerie);
-        this.createScore();
     }
 
     createScore() {
         try {
-            new Score(`${this.selector} li .score`, this.itemSerie);
+            new Score(
+                `#item_${this.itemSerie.id} .score`,
+                this.itemSerie,
+                this.itemSerie.score
+            );
         } catch (error) {
             console.log((error as Error).message);
         }
@@ -41,7 +44,7 @@ export class Item extends Component {
     createTemplate() {
         let itemsTemplate = '';
         itemsTemplate += `
-                <li class="serie">
+                <li class="serie" id="item_${this.itemSerie.id}">
                     <img
                         class="serie__poster"
                         src="${this.itemSerie.poster}"
