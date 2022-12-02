@@ -1,8 +1,7 @@
-import { Serie } from '../../models/serie.js';
 import { Component } from '../component/component.js';
 
 export class Score extends Component {
-    constructor(selector: string, private itemSerie: Serie, itemScore: number) {
+    constructor(selector: string, itemScore: number) {
         super();
         this.template = this.createTemplate(itemScore);
         this.addRender(selector);
@@ -22,7 +21,6 @@ export class Score extends Component {
                 `<i class="icon--score fas fa-star" title="1/5"></i>`
             );
         }
-        //const newItemsTemplateRated = itemsArrayTemplateRated.join();
 
         if (itemScore !== 0) {
             let index = 0;

@@ -2,26 +2,22 @@ import { Component } from '../component/component.js';
 import { Serie } from '../../models/serie.js';
 import { Score } from '../serie.score/score.js';
 
-const handleRate = (event: Event) => {
-    const rateElement = event.target as HTMLUListElement;
-    console.log(rateElement);
-};
 export class Item extends Component {
-    isWatched: boolean;
-    constructor(private selector: string, private itemSerie: Serie) {
+    constructor(
+        private selector: string,
+        private itemSerie: Serie,
+        public handleStars: (series: Serie) => void
+    ) {
         super();
         this.template = this.createTemplate();
-        this.addRender(selector);
+        this.render();
         this.createScore();
-        this.listenerRate();
-        this.isWatched = this.changeValue(itemSerie);
     }
 
     createScore() {
         try {
             new Score(
                 `#item_${this.itemSerie.id} .score`,
-                this.itemSerie,
                 this.itemSerie.score
             );
         } catch (error) {
@@ -29,16 +25,18 @@ export class Item extends Component {
         }
     }
 
-    changeValue(itemSerie: Serie) {
-        console.log(itemSerie.name + ' ' + itemSerie.watched);
-        return true;
-    }
+    handleRate = (event: Event) => {
+        const rateElement = event.target as HTMLUListElement;
+        this.itemSerie.watched = true;
+        this.handleStars(this.itemSerie);
+    };
 
-    listenerRate() {
-        const scoreList = document.querySelectorAll('.score') as NodeList;
-        scoreList.forEach((item) => {
-            item.addEventListener('click', handleRate);
-        });
+    render() {
+        const element = super.innRender(this.selector, 'end');
+        element
+            .querySelector('.score')
+            ?.addEventListener('click', this.handleRate.bind(this));
+        return element;
     }
 
     createTemplate() {
