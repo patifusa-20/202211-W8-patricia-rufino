@@ -1,5 +1,5 @@
 export type DataSerieType = {
-    id: number;
+    id: string;
     name: string;
     creator: string;
     year: number;
@@ -11,9 +11,11 @@ export type DataSerieType = {
 
 export class Serie implements DataSerieType {
     static generateId() {
-        return ~~Math.random() * 1_000_000;
+        const aNumbers = new Uint32Array(1);
+        crypto.getRandomValues(aNumbers);
+        return ('000000' + aNumbers[0]).slice(-6);
     }
-    id: number;
+    id: string;
     watched: boolean;
     constructor(
         public name: string,

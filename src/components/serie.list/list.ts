@@ -15,6 +15,10 @@ export class List extends Component {
         this.createItems(selector);
     }
 
+    handleStars(serie: Serie) {
+        //
+    }
+
     filterList(selector: string) {
         let filteredList = [];
         if (selector === '[name="list"]') {
@@ -33,7 +37,13 @@ export class List extends Component {
     createItems(selector: string) {
         this.filteredList.forEach((element: Serie) => {
             try {
-                console.dir(new Item(`${selector} .series-list`, element));
+                console.dir(
+                    new Item(
+                        `${selector} .series-list`,
+                        element,
+                        this.handleStars.bind(this)
+                    )
+                );
             } catch (error) {
                 console.log((error as Error).message);
             }

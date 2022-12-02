@@ -1,11 +1,16 @@
 import { Component } from '../component/component.js';
 
 export class Header extends Component {
-    constructor(selector: string) {
+    constructor(private selector: string) {
         super();
         this.template = this.createTemplate();
-        this.render(selector);
+        this.render();
     }
+
+    render() {
+        return super.innRender(this.selector);
+    }
+
     createTemplate() {
         return `
         <header class="main-header">

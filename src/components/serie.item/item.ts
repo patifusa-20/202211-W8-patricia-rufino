@@ -1,47 +1,48 @@
 import { Component } from '../component/component.js';
-import { DataSerieType, Serie } from '../../models/serie.js';
-import { series } from '../../mocks/series.js';
+import { Serie } from '../../models/serie.js';
 import { Score } from '../serie.score/score.js';
 
-const handleRate = (event: Event) => {
-    const rateElement = event.target as HTMLUListElement;
-    console.log(rateElement);
-};
 export class Item extends Component {
-    isWatched: boolean;
-    constructor(private selector: string, private itemSerie: Serie) {
+    constructor(
+        private selector: string,
+        private itemSerie: Serie,
+        public handleStars: (series: Serie) => void
+    ) {
         super();
         this.template = this.createTemplate();
-        this.addRender(selector);
-        this.listenerRate();
-        this.isWatched = this.changeValue(itemSerie);
+        this.render();
         this.createScore();
     }
 
     createScore() {
         try {
-            new Score(`${this.selector} li .score`, this.itemSerie);
+            new Score(
+                `#item_${this.itemSerie.id} .score`,
+                this.itemSerie.score
+            );
         } catch (error) {
             console.log((error as Error).message);
         }
     }
 
-    changeValue(itemSerie: Serie) {
-        console.log(itemSerie.name + ' ' + itemSerie.watched);
-        return true;
-    }
+    handleRate = (event: Event) => {
+        const rateElement = event.target as HTMLUListElement;
+        this.itemSerie.watched = true;
+        this.handleStars(this.itemSerie);
+    };
 
-    listenerRate() {
-        const scoreList = document.querySelectorAll('.score') as NodeList;
-        scoreList.forEach((item) => {
-            item.addEventListener('click', handleRate);
-        });
+    render() {
+        const element = super.innRender(this.selector, 'end');
+        element
+            .querySelector('.score')
+            ?.addEventListener('click', this.handleRate.bind(this));
+        return element;
     }
 
     createTemplate() {
         let itemsTemplate = '';
         itemsTemplate += `
-                <li class="serie">
+                <li class="serie" id="item_${this.itemSerie.id}">
                     <img
                         class="serie__poster"
                         src="${this.itemSerie.poster}"
